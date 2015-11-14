@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{Schmidt1993}
+Michael~W. Schmidt, Kim~K. Baldridge, Jerry~A. Boatz, Steven~T. Elbert, Mark~S.
+  Gordon, Jan~H. Jensen, Shiro Koseki, Nikita Matsunaga, Kiet~A. Nguyen, Shujun
+  Su, Theresa~L. Windus, Michel Dupuis, and John~A. Montgomery.
+\newblock {General atomic and molecular electronic structure system}.
+\newblock {\em Journal of Computational Chemistry}, 14(11):1347--1363, 1993.
+
+\bibitem{g09}
+M.~J. Frisch, G.~W. Trucks, H.~B. Schlegel, G.~E. Scuseria, M.~A. Robb, J.~R.
+  Cheeseman, G.~Scalmani, V.~Barone, B.~Mennucci, G.~A. Petersson,
+  H.~Nakatsuji, M.~Caricato, X.~Li, H.~P. Hratchian, A.~F. Izmaylov, J.~Bloino,
+  G.~Zheng, J.~L. Sonnenberg, M.~Hada, M.~Ehara, K.~Toyota, R.~Fukuda,
+  J.~Hasegawa, M.~Ishida, T.~Nakajima, Y.~Honda, O.~Kitao, H.~Nakai, T.~Vreven,
+  J.~A. Montgomery, {Jr.}, J.~E. Peralta, F.~Ogliaro, M.~Bearpark, J.~J. Heyd,
+  E.~Brothers, K.~N. Kudin, V.~N. Staroverov, R.~Kobayashi, J.~Normand,
+  K.~Raghavachari, A.~Rendell, J.~C. Burant, S.~S. Iyengar, J.~Tomasi,
+  M.~Cossi, N.~Rega, J.~M. Millam, M.~Klene, J.~E. Knox, J.~B. Cross,
+  V.~Bakken, C.~Adamo, J.~Jaramillo, R.~Gomperts, R.~E. Stratmann, O.~Yazyev,
+  A.~J. Austin, R.~Cammi, C.~Pomelli, J.~W. Ochterski, R.~L. Martin,
+  K.~Morokuma, V.~G. Zakrzewski, G.~A. Voth, P.~Salvador, J.~J. Dannenberg,
+  S.~Dapprich, A.~D. Daniels, Ö. Farkas, J.~B. Foresman, J.~V. Ortiz,
+  J.~Cioslowski, and D.~J. Fox.
+\newblock Gaussian∼09 {R}evision {D}.01.
+\newblock Gaussian Inc. Wallingford CT 2009.
+
+\bibitem{McQuarrie1973}
+D.A. McQuarrie.
+\newblock {\em Statistical thermodynamics}.
+\newblock University Science Books, 1973.
+
+\end{thebibliography}

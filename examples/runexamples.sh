@@ -10,8 +10,12 @@ echo -e "\033[01;32mgetThermo examples in execution...\033[00m"
 cd example1/
 ../../bin/getThermo example1 > /dev/null
 
-#Example 2
+# Example 2
 cd ../example2
 ../../bin/getThermo example2 > /dev/null
+
+# Example 3
+cd ../example3
+../../bin/getThermo example3 > /dev/null
 
 echo -e "\033[01;32mgetThermo examples were sucesfully executed. Compare with results in output folders.\033[00m"

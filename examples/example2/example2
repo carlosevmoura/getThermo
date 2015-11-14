@@ -1,3 +1,3 @@
-GAMESSOUT=molecules
+OUTPUT=molecules
 NVibMode=9
 Temperature=258.15 268.15 278.15 288.15 298.15 308.15
