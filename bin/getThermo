@@ -5,7 +5,7 @@
 ### Grupo de Espectroscopia Teórica e Modelagem Molecular - GETMM (IQ/UFRJ)
 
 ### Location of getThermo (/folder/getThermo/bin)
-getDIR="$HOME/getThermo/bin"
+getDIR="$HOME/Documents/GitHub/getThermo/bin"
 
 if [ -f $getDIR/getThermo.x ]; then
 	echo -e "\033[01;32mgetThermo in execution...\033[00m"  	    
@@ -37,7 +37,7 @@ else
 fi
 
 ## Checking work type as single calculation (File) or multiple calculations (Folder)
-if ls -la|awk '{print $9}'|grep -qFx "$GAMESSOUT"; then	
+if ls -la|awk '{print $9}'|grep -q "$GAMESSOUT"; then	
 	if ls -la|grep ^d|awk '{print $9}'|grep -qFx "$GAMESSOUT"; then
 		WORKTYPE=FOLDER
 		JOB=(`grep -l "RUNTYP=HESSIAN" $GAMESSOUT/*`)
@@ -52,7 +52,7 @@ else
 fi
 
 ## Checking the Runtyp HESSIAN for GAMESS calculations
-if [ -z ${JOB[1]} ]; then
+if [ -z ${JOB[0]} ]; then
 	echo -e "\033[01;31mThe GAMESS jobs aren't from HESSIAN type. End of getThermo execution.\033[00m"  	
 	exit 1
 fi
@@ -115,14 +115,14 @@ echo -e "$NAtoms $TMode $NVibMode\n${IMode[*]}\n$EEnergy $QElec\n${AMass[*]}\n${
 ### Executing thermodynamics proprieties calculations with getThermo binary
 $getDIR/getThermo.x $Title $Title.getThermo.inp > $Title.getThermo.out
 
-echo "/nInformation" >> $Title.getThermo.out
+echo -e "\n # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #" >> $Title.getThermo.out
 date '+Date %y-%m-%d - Time %H-%M-%S' >> $Title.getThermo.out
 rm -f $Title.getThermo.inp
 
 ### Creating Table for Multiple Results
 if [ $WORKTYPE == FOLDER ]; then
 	if [ $NJob == 0 ]; then
-		echo -e "Job\tT (K)\tVibrational\tG (kJ/mol)\tRotational G (kJ/mol)\tTranslational G (kJ/mol)\tTotal G (kJ/mol)" > $GAMESSOUT.getThermo.tsv
+		echo -e "Job\tT (K)\tVibrationalG (kJ/mol)\tRotationalG (kJ/mol)\tTranslationalG (kJ/mol)\tThermalCorrection (kJ/mol)\tTotalG (kJ/mol)" > $GAMESSOUT.getThermo.tsv
 	fi
     
     NTemp=0
@@ -130,8 +130,9 @@ if [ $WORKTYPE == FOLDER ]; then
         GRot=`awk '/Rotational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
         GTrans=`awk '/Translational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
         GVib=`awk '/Vibrational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        TGVib=`awk '/Total\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        echo -e "$Title\t${Temperature[NTemp]}\t$GRot\t$GTrans\t$GVib\t$TGVib" >> $GAMESSOUT.getThermo.tsv
+        GCorr=`awk '/Total\ Thermal\ Correction\:/{print $4}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+        TotalG=`awk '/Total\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+        echo -e "$Title\t${Temperature[NTemp]}\t$GRot\t$GTrans\t$GVib\t$GCorr\t$TotalG" >> $GAMESSOUT.getThermo.tsv
         NTemp=$((NTemp+1))
     done
 fi

@@ -1,0 +1,90 @@
+ ###########################################################
+ #                        getThermo                        #
+ #         Thermodynamics with selected normal modes       #
+ ###########################################################
+
+ Job Name: molecules/dichloromethane                                                                           
+ Total number of normal modes:          15
+ Number of selected normal modes:        9
+ Number of selected temperatures:        6
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ Temperature:                                 258.15 K
+ Vibrational Partition Function:      1.30139600E+00
+ Rotational Partition Function:       4.24191806E+04
+ Translational Partition Function:    2.10913338E+07
+
+ Vibrational Gibbs Free Energy:          82.29211480 kJ/mol
+ Rotational Gibbs Free Energy:          -22.87042460 kJ/mol
+ Translational Gibbs Free Energy:       -36.19732364 kJ/mol
+
+ Total Thermal Correction:               23.22436656 kJ/mol
+ Total Gibbs Free Energy:            -2.51500040E+06 kJ/mol
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ Temperature:                                 268.15 K
+ Vibrational Partition Function:      1.33142123E+00
+ Rotational Partition Function:       4.49076969E+04
+ Translational Partition Function:    2.31936033E+07
+
+ Vibrational Gibbs Free Energy:          82.21935723 kJ/mol
+ Rotational Gibbs Free Energy:          -23.88346200 kJ/mol
+ Translational Gibbs Free Energy:       -37.81134198 kJ/mol
+
+ Total Thermal Correction:               20.52455325 kJ/mol
+ Total Gibbs Free Energy:            -2.51500310E+06 kJ/mol
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ Temperature:                                 278.15 K
+ Vibrational Partition Function:      1.36302157E+00
+ Rotational Partition Function:       4.74430583E+04
+ Translational Partition Function:    2.54168299E+07
+
+ Vibrational Gibbs Free Energy:          82.14130908 kJ/mol
+ Rotational Gibbs Free Energy:          -24.90115150 kJ/mol
+ Translational Gibbs Free Energy:       -39.43311381 kJ/mol
+
+ Total Thermal Correction:               17.80704377 kJ/mol
+ Total Gibbs Free Energy:            -2.51500582E+06 kJ/mol
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ Temperature:                                 288.15 K
+ Vibrational Partition Function:      1.39624098E+00
+ Rotational Partition Function:       5.00244148E+04
+ Translational Partition Function:    2.77632486E+07
+
+ Vibrational Gibbs Free Energy:          82.05786859 kJ/mol
+ Rotational Gibbs Free Energy:          -25.92332576 kJ/mol
+ Translational Gibbs Free Energy:       -41.06236026 kJ/mol
+
+ Total Thermal Correction:               15.07218257 kJ/mol
+ Total Gibbs Free Energy:            -2.51500855E+06 kJ/mol
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ Temperature:                                 298.15 K
+ Vibrational Partition Function:      1.43112609E+00
+ Rotational Partition Function:       5.26509609E+04
+ Translational Partition Function:    3.02350545E+07
+
+ Vibrational Gibbs Free Energy:          81.96894058 kJ/mol
+ Rotational Gibbs Free Energy:          -26.94982908 kJ/mol
+ Translational Gibbs Free Energy:       -42.69882180 kJ/mol
+
+ Total Thermal Correction:               12.32028969 kJ/mol
+ Total Gibbs Free Energy:            -2.51501131E+06 kJ/mol
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+ Temperature:                                 308.15 K
+ Vibrational Partition Function:      1.46772609E+00
+ Rotational Partition Function:       5.53219320E+04
+ Translational Partition Function:    3.28344051E+07
+
+ Vibrational Gibbs Free Energy:          81.87443640 kJ/mol
+ Rotational Gibbs Free Energy:          -27.98051622 kJ/mol
+ Translational Gibbs Free Energy:       -44.34225637 kJ/mol
+
+ Total Thermal Correction:                9.55166381 kJ/mol
+ Total Gibbs Free Energy:            -2.51501408E+06 kJ/mol
+
+ # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+Date 15-11-14 - Time 13-42-06

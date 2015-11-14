@@ -113,6 +113,19 @@ END FUNCTION GEnergy
 
 
 
+FUNCTION GEnergyCorr(QElec, QTrans, QRot, QVib, ZPE, Temperature)
+! GEnergyCorr calculate the total Thermal Gibbs Free Energy
+! Variable Declarations
+	REAL(KIND=8), INTENT(IN) :: QElec, QTrans, QRot, QVib, ZPE
+	REAL(KIND=8) :: GEnergy, GEnergyCorr, Temperature
+
+! Calculate and returns Thermal Gibbs Free Energy using Free Energies from Eletronic, Translational, Rotational and Vibrational 
+! contributuions with Zero-Point Energy correction
+	GEnergyCorr=GEnergy(QElec, Temperature)+GEnergy(QTrans, Temperature)+GEnergy(QRot, Temperature)+GEnergy(QVib, Temperature)+ZPE
+END FUNCTION GEnergyCorr
+
+
+
 FUNCTION TGEnergy(EEnergy, QElec, QTrans, QRot, QVib, ZPE, Temperature)
 ! TGEnergy calculate the total Gibbs Free Energy
 ! Variable Declarations
@@ -135,7 +148,7 @@ PROGRAM getThermo
 	INTEGER, ALLOCATABLE, DIMENSION(:) :: IMode
 	REAL(KIND=8), DIMENSION(3) :: Inertia
 	REAL(KIND=8), ALLOCATABLE, DIMENSION(:) :: TModeList, VibModeList, TempList, AMass
-	REAL(KIND=8) :: EEnergy, QElec, QTrans, QRot, QVib, ZPE, GEnergy, TGEnergy, TMass
+	REAL(KIND=8) :: EEnergy, QElec, QTrans, QRot, QVib, ZPE, GEnergy, GEnergyCorr, TGEnergy, TMass
 	CHARACTER(100) :: Job, Input
 
 	CALL GETARG(1,Job)															! Get the external argument contents job name
@@ -160,10 +173,10 @@ PROGRAM getThermo
 	END DO
 
 ! Header of getThermo Output 
-	PRINT *, "##########################################################"
-	PRINT *, "#                       getThermo                        #"
-	PRINT *, "#        Thermodynamics with selected normal modes       #"
-	PRINT *, "##########################################################"
+	PRINT *, "###########################################################"
+	PRINT *, "#                        getThermo                        #"
+	PRINT *, "#         Thermodynamics with selected normal modes       #"
+	PRINT *, "###########################################################"
 
 ! Print calculation details from input file
 	PRINT '(/1X, "Job Name:" T12, A)', Job
@@ -173,7 +186,8 @@ PROGRAM getThermo
 
 ! Calculate and print Themodynamics Functions
 	DO Num=1, NTemp
-		PRINT '(/1X, "Temperature:" T41, F12.2, 1X, "K")', TempList(Num)
+    	PRINT '(/1X, "# # # # # # # # # # # # # # # # # # # # # # # # # # # # # #")'
+		PRINT '(1X, "Temperature:" T41, F12.2, 1X, "K")', TempList(Num)
 		PRINT '(1X, "Vibrational Partition Function:" T38, Es15.8)', QVib(VibModeList, NVibMode, TempList(Num))
 		PRINT '(1X, "Rotational Partition Function:" T38, Es15.8)', QRot(Inertia, TempList(Num))
 		PRINT '(1X, "Translational Partition Function:" T38, Es15.8)', QTrans(AMass, NAtoms, TempList(Num))
@@ -182,7 +196,8 @@ PROGRAM getThermo
 		PRINT '(1X, "Rotational Gibbs Free Energy: " T38, F15.8, 1X, "kJ/mol")', (GEnergy(QRot(Inertia, TempList(Num)), TempList(Num)))/1000.0
 		PRINT '(1X, "Translational Gibbs Free Energy: " T38, F15.8, 1X, "kJ/mol")', (GEnergy(QTrans(AMass, NAtoms, TempList(Num)), TempList(Num)))/1000.0
 
-		PRINT '(1X, "Total Gibbs Free Energy:", T38, Es15.8, 1X, "kJ/mol")', TGEnergy(EEnergy, QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num))/1000.0
+        PRINT '(/1X, "Total Thermal Correction:", T38, F15.8, 1X, "kJ/mol")', (GEnergyCorr(QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num)))/1000.0
+		PRINT '(1X, "Total Gibbs Free Energy:", T38, Es15.8, 1X, "kJ/mol")', (TGEnergy(EEnergy, QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num)))/1000.0
 	END DO
 
 END PROGRAM getThermo

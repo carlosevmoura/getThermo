@@ -7,7 +7,7 @@
 % LaTeX Packages
 % ---
 \usepackage{cmap}						% Mapping special characters in PDF
-\usepackage{lmodern}						% Uses Latin Modern font
+\usepackage{lmodern}					% Uses Latin Modern font
 \usepackage[T1]{fontenc}					% Source code collection
 \usepackage[utf8]{inputenc}				% Document codification
 \usepackage{indentfirst}					% Indents the first paragraph of each section.
@@ -135,9 +135,9 @@
 
 The \textbf{getThermo} package was created to make possible obtain thermodynamic properties of chemical systems selecting normal modes to represent vibrational movement. This manual selection should be necessary in cases which the quantum mechanics package is unable to correctly discriminate vibrational modes. In this cases, for example in calculation of supermolecules frequencies, some rotational modes could be assigned as vibrational modes, resulting in incorrect values of thermodynamic properties.
 
-This first version of \textbf{getThermo} is applicable only to frequencies calculations from GAMESS package (\textit{General Atomic and Molecular Electronic Structure System}). \cite{Schmidt1993}
+This first version of \textbf{getThermo} is applicable only to frequencies calculations from GAMESS package (\textit{General Atomic and Molecular Electronic Structure System}) \cite{Schmidt1993}. We are planning to expand to Gaussian09 soon.
 
-Procedure to obtain partition functions follows the same treatment as in GAMESS package. Briefly, the following equations are derivated from statistical mechanics. \cite{McQuarrie1973} 
+Procedure to obtain partition functions follows the same treatment as in GAMESS package. Briefly, the following equations are derived from statistical mechanics. \cite{McQuarrie1973} 
 
 Vibrational partition function, $q_{vib}$, is obtained by description of movement as an harmonic oscillator approximation. It depends of frequencies from Hessian calculation, $\nu_{i}$, and temperature, $T$. (equation \ref{eq:QVib}) 
 \begin{equation}\label{eq:QVib}
@@ -240,6 +240,8 @@ Default: 298.15 K
 \addcontentsline{Contents}{section}{About Authors}
 
 \textbf{getThermo} is developed by Grupo de Espectroscopia Teórica e Modelagem Molecular (GET) from Instituto de Química of Universidade Federal do Rio de Janeiro (IQ/UFRJ), coordinated by  \href{mailto:rocha@iq.ufrj.br}{Professor Alexandre Braga da Rocha}.
+
+Distribution of \textbf{getThermo} is given on our \href{https://github.com/carlosevmoura/getThermo}{GitHub repository}, under \href{https://opensource.org/licenses/MIT}{MIT License}
 
 The FORTRAN code and shell-scripts are developed by \href{mailto:carlosevmoura@iq.ufrj.br}{M.Sc. Carlos Eduardo de Moura} and \href{mailto:rrjunior@iq.ufrj.br}{M.Sc. Ricardo Oliveira}. Contact us for any question about \textbf{getThermo}.
 
