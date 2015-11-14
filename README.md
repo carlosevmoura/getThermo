@@ -1,7 +1,7 @@
 # getThermo
 A tool to obtain thermodynamic properties of chemical systems selecting normal modes which describes vibrational movement.
 
-**getThermo** works with [GAMESS-US](http://www.msg.ameslab.gov/gamess/index.html) output files from Hessian calculation type.
+**getThermo** works with [GAMESS-US](http://www.msg.ameslab.gov/gamess/index.html) output files from Hessian calculation type and [Gaussian09](http://www.gaussian.com/g_prod/g09.htm) output files from Frequency calculation.
 
 ## Installation
 To install **getThermo**, you should compile getThermo.f90 code, with your favourite FORTRAN compiler, and move the binary file to internal *bin* directory. We recommend to use [GFortran](https://gcc.gnu.org/fortran/).
