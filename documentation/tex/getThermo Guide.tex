@@ -1,0 +1,253 @@
+%% Documentation for getThermo
+%% Written by Carlos Eduardo Vieira de Moura - carlosevmoura@iq.ufrj.br
+
+\documentclass[11pt,oneside,a4paper]{article} 
+
+% ---
+% LaTeX Packages
+% ---
+\usepackage{cmap}						% Mapping special characters in PDF
+\usepackage{lmodern}						% Uses Latin Modern font
+\usepackage[T1]{fontenc}					% Source code collection
+\usepackage[utf8]{inputenc}				% Document codification
+\usepackage{indentfirst}					% Indents the first paragraph of each section.
+\usepackage{color}						% Colors control
+\usepackage[pdftex]{graphicx}			% Include graphics
+\usepackage{amssymb,amsmath,amsfonts}	% AMS-LaTeX packages
+\usepackage{tikz}						% Tikz package for graphics
+\usepackage{listingsutf8}				% Allow UTF-8 in listings input
+\usepackage{multirow}					% Create tabular cells spanning multiple rows
+\usepackage{booktabs}					% Publication quality tables in LaTeX
+\usepackage{afterpage}					% Execute command after the next page break
+\usepackage{epstopdf}					% Include EPS files in PDF
+\usepackage[bookmarks=true]{hyperref}	% PDF Bookmarks Configuration
+\usepackage{bookmark}					% PDF Bookmarks Configuration
+\usepackage[margin=1.15in]{geometry}		% Page margin Configuration
+\usepackage{framed,color}				% Frame for texts
+\usepackage{hyperref}				% 
+% ---
+% Other configurations
+% ---
+\graphicspath{{Pictures/}}				% Pictures directory definition
+%\newsubfloat{figure}					% Allow subfloats in figure environment
+\epstopdfsetup{update} 					% Regenerate PDF files when EPS file is newer
+\definecolor{shadecolor}{gray}{0.9}		% Framed text color
+% ---
+
+% ---
+% Informations
+% ---
+\title{getThermo Manual}
+\author{Written by M.Sc. Carlos Eduardo de Moura\\
+	Grupo de Espectroscopia Teórica e Modelagem Molecular -- GET\\
+	Universidade Federal do Rio de Janeiro -- UFRJ}
+\date{November, 2015}
+% ---
+
+% ---
+%	Title Page
+% ---
+
+\newcommand*{\titleGM}{\begingroup % Create the command for including the title page in the document
+\hbox{ % Horizontal box
+\hspace*{0.10\textwidth} % Whitespace to the left of the title page
+\rule{1pt}{\textheight} % Vertical line
+\hspace*{0.05\textwidth} % Whitespace between the vertical line and title page text
+\parbox[b]{0.95\textwidth}{ % Paragraph box which restricts text to less than the width of the page
+
+{\noindent\Huge\bfseries getThermo}\\[2\baselineskip] % Title
+{\large \textit{User's Guide}}\\[4\baselineskip] % Tagline or further description
+
+\vspace{0.5\textheight} % Whitespace between the title block and the publisher
+{\noindent Grupo de Espectroscopia Teórica e Modelagem Molecular -- GET}\\[\baselineskip] % Publisher 
+}}
+\endgroup}
+% ---
+
+% ---
+% PDF Configurations
+% ---
+% Blue color change
+\definecolor{blue}{RGB}{41,5,195}
+
+% PDF informations
+\makeatletter
+\hypersetup{
+ 	pagebackref=true,
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	colorlinks=true,       		% false: boxed links; true: colored links
+	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+   	filecolor=magenta,      		% color of file links
+	urlcolor=blue,
+	bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% Index compilation
+% ---
+\makeindex
+% ---
+
+% --- 
+% Spacing configurations
+% --- 
+\setlength{\parindent}{1.0cm}
+\setlength{\parskip}{0.3cm}
+
+% ----
+% Document beginning
+% ----
+\begin{document}
+
+\frenchspacing % Removes obsolete extra space between sentences
+
+% ----------------------------------------------------------
+% Counters
+% ----------------------------------------------------------
+\setcounter{equation}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+
+% ---
+% Cover
+% ---
+\thispagestyle{empty}
+\titleGM
+
+% ---
+% Table of Contents
+% ---
+\pdfbookmark[0]{\contentsname}{Contents}
+\tableofcontents
+\thispagestyle{empty}
+\cleardoublepage
+% ---
+
+% ----------------------------------------------------------
+% Introduction
+% ----------------------------------------------------------
+\section[Introduction]{Introduction}
+\addcontentsline{Contents}{section}{Introduction}
+
+The \textbf{getThermo} package was created to make possible obtain thermodynamic properties of chemical systems selecting normal modes to represent vibrational movement. This manual selection should be necessary in cases which the quantum mechanics package is unable to correctly discriminate vibrational modes. In this cases, for example in calculation of supermolecules frequencies, some rotational modes could be assigned as vibrational modes, resulting in incorrect values of thermodynamic properties.
+
+This first version of \textbf{getThermo} is applicable only to frequencies calculations from GAMESS package (\textit{General Atomic and Molecular Electronic Structure System}). \cite{Schmidt1993}
+
+Procedure to obtain partition functions follows the same treatment as in GAMESS package. Briefly, the following equations are derivated from statistical mechanics. \cite{McQuarrie1973} 
+
+Vibrational partition function, $q_{vib}$, is obtained by description of movement as an harmonic oscillator approximation. It depends of frequencies from Hessian calculation, $\nu_{i}$, and temperature, $T$. (equation \ref{eq:QVib}) 
+\begin{equation}\label{eq:QVib}
+q_{vib} = \prod_{i} \left( \frac{1}{1-e^{-\tfrac{hc}{k_{B}T}\,\nu_{i}}} \right)
+\end{equation}
+
+Translational partition function, $q_{trans}$, is obtained through ideal gas Law approach. It is calculated based in total mass weight, $M$, and pressure, $P$. (equation \ref{eq:QTrans})
+\begin{equation}\label{eq:QTrans}
+q_{trans} = \frac{1}{P} \left( k_{B} T \right)^{^5/_2} \left( \frac{2 \pi}{h^2} \frac{M}{N_{A}} \right)^{^3/_2}
+\end{equation}
+
+Rotational partition function, $q_{rot}$, is obtained by description of movement as an rigid rotor approximation. It is calculated based in inertia moment in the three Cartesian coordinates, $I_{r}$, and temperature, $T$. (equation \ref{eq:QRot})
+\begin{equation}\label{eq:QRot}
+q_{rot} = \sqrt{\pi} \left( \frac{T^{^3/_2}}{\sqrt{\Theta_{x}}\sqrt{\Theta_{y	}}\sqrt{\Theta_{z}}} \right)
+\end{equation}
+
+Where $\Theta_{r}$ is given by the expression shown in equation \ref{eq:Theta}.
+\begin{equation}\label{eq:Theta}
+\Theta_{r} = \frac{h^{2}}{8\pi^{2}k_{B}} \frac{1}{I_{r}}
+\end{equation}
+
+These partition functions are applied to obtain corrected total Gibbs Free Energy to the chemical system of interest.
+
+% ----------------------------------------------------------
+% Installation
+% ----------------------------------------------------------
+\pagebreak
+\section[Installation Instructions]{Installation Instructions}
+\addcontentsline{Contents}{section}{Installation Instructions}
+
+The \textbf{getThermo} package contains a very simple shell-script called \textit{install}. Running this script, the compilation of \textbf{getThermo} is executed and the binary \textit{getThermo.x} placed at \textit{build} folder.
+
+If you want to compile \textbf{getThermo} manually, is recommended \textit{gfortran} as FORTRAN compiler. The command is exemplified in following textbox.
+\begin{shaded}
+gfortran -ffree-line-length-none getThermo.f90 -o getThermo.x
+\end{shaded}
+
+% ----------------------------------------------------------
+% Software Structure
+% ----------------------------------------------------------
+\section[Software Structure]{Software Structure}
+\addcontentsline{Contents}{section}{Software Structure}
+
+The \textbf{getThermo} package contais two programs: the \textit{getThermo} shell-script and the \textit{getThermo.x} binary. 
+
+The shell-script, wrote in BASH (\textit{Bourne-Again SHell}), takes the user's input file, checking its suitability and generating the complete input read by \textit{getThermo.x}. This complete input file is a hidden file created to each selected work, named \textit{\{Work\}.getThermo.inp}. It's also execute the calculations indicated in input file and generate their output files.
+
+The \textit{getThermo.x} binary perform the thermodynamic properties calculations and it's executed within the \textit{getThermo} shell-script. The code was wrote in FORTRAN 90/95 (\textit{Mathematical FORmula TRANslation System}).
+
+To run \textbf{getThermo} you should use only the \textit{getThermo} shell-script, giving your input filename in a command like in the shown below. To avoid errors, this script \textbf{must} be executed in the folder which contain the input files.
+\begin{shaded}
+./getThermo \{Input Filename\}
+\end{shaded}
+
+After the calculation are created two kinds of output files. The \textit{\{Work\}.getThermo.out} file contains the results for a single selected work. The \textit{\{Input Filename\}.getThermo.tsv} (\textit{Tab-Separated Values format}) contains all the results, organized in a table to simplify the post-treatment. 
+
+% ----------------------------------------------------------
+% Input Description
+% ----------------------------------------------------------
+\pagebreak
+\section[Input Description]{Input Description}
+\addcontentsline{Contents}{section}{Input Description}
+
+The input file have an important and very simple rule to avoid syntax errors: \textbf{Only one command is permitted per line.} In multiple instance case, the \textbf{getThermo} shell-script takes only the last occurrence.
+
+It's also possible to make comments in the input file. Any information after the keywords are ignored by \textbf{getThermo} shell script since you do not use keywords in this texts. In the same way, lines that do not contain any keyword are also ignored and can be used as a comment.
+
+Each keyword has the syntax shown in the following box. The keyword and its value are separated by a equal character, `='.
+\begin{shaded}
+KEYWORD=\{Keyword value\}
+\end{shaded}
+
+For cases in which keywords contains array elements, these are separated by commas. In the following box, there's an example with three array elements.
+\begin{shaded}
+KEYWORD=\{Keyword value \#1\},\{Keyword value \#2\},\{Keyword value \#3\}
+\end{shaded}
+
+\subsection{Required Keywords}
+\begin{itemize}
+\item \textbf{GAMESSOUT}: GAMESS output filename or folder which contains. The output file must to be from Hessian calculation type (keyword RUNTYP=HESSIAN in GAMESS input file).
+\item \textbf{NVibMode}: Number of vibrational modes selected to thermodynamic properties calculations.
+\end{itemize}
+
+\subsection{Optional Keywords}
+\begin{itemize}
+\item \textbf{IMode}: An array containing the sequence of normal modes.
+
+The \textbf{getThermo} FORTRAN program excludes	the firsts modes, the deselected by \textbf{NVibMode} keyword and the rotational and translational modes. In some cases, you should try to use this keyword to select correctly the interesting modes. Max dimension is equal \textbf{NVibMode} value given.
+
+\item \textbf{Temperature}: An array containing temperatures to be used in thermodynamic properties calculations.
+
+Default: 298.15 K
+\end{itemize}
+
+% ----------------------------------------------------------
+% About Authors
+% ----------------------------------------------------------
+\pagebreak
+\section[About Authors]{About Authors}
+\addcontentsline{Contents}{section}{About Authors}
+
+\textbf{getThermo} is developed by Grupo de Espectroscopia Teórica e Modelagem Molecular (GET) from Instituto de Química of Universidade Federal do Rio de Janeiro (IQ/UFRJ), coordinated by  \href{mailto:rocha@iq.ufrj.br}{Professor Alexandre Braga da Rocha}.
+
+The FORTRAN code and shell-scripts are developed by \href{mailto:carlosevmoura@iq.ufrj.br}{M.Sc. Carlos Eduardo de Moura} and \href{mailto:rrjunior@iq.ufrj.br}{M.Sc. Ricardo Oliveira}. Contact us for any question about \textbf{getThermo}.
+
+% ----------------------------------------------------------
+% References
+% ----------------------------------------------------------
+\pagebreak
+\bibliographystyle{unsrt}
+\bibliography{References}
+
+\end{document}

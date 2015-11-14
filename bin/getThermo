@@ -1,0 +1,142 @@
+#!/bin/bash
+
+### getThermo - A script to execute getThermo Fortran program
+### A program to calculate Partition Functions and Gibbs Free Energy from selected Normal Modes from GAMESS
+### Grupo de Espectroscopia Teórica e Modelagem Molecular - GETMM (IQ/UFRJ)
+
+### Location of getThermo (/folder/getThermo/bin)
+getDIR="$HOME/getThermo/bin"
+
+if [ -f $getDIR/getThermo.x ]; then
+	echo -e "\033[01;32mgetThermo in execution...\033[00m"  	    
+else
+	echo -e "\033[01;31mThere's no valid binaries directory. Configure it in this script. End of getThermo execution.\033[00m"  	
+	exit 1
+fi
+
+### Definition of Input File
+if [ -n "$1" ]; then 
+	if [ -f "$1" ]; then
+        INPUT=$1    
+    else
+    	echo -e "\033[01;31mThere's no valid input file. End of getThermo execution.\033[00m"  	
+    	exit 1        
+    fi
+else
+	echo -e "\033[01;31mThere's no valid input file. End of getThermo execution.\033[00m"  	
+	exit 1
+fi
+
+### Required Keywords
+## Definition of output filename or folder which contains (GAMESSOUT)
+if grep -q "GAMESSOUT" $INPUT; then
+	GAMESSOUT=`grep "GAMESSOUT" $INPUT|tail -1|cut -d "=" -f 2|cut -d " " -f 1`
+else
+	echo -e "\033[01;31mThere's no valid GAMESS Output file selected. End of getThermo execution.\033[00m"  	
+	exit 1
+fi
+
+## Checking work type as single calculation (File) or multiple calculations (Folder)
+if ls -la|awk '{print $9}'|grep -qFx "$GAMESSOUT"; then	
+	if ls -la|grep ^d|awk '{print $9}'|grep -qFx "$GAMESSOUT"; then
+		WORKTYPE=FOLDER
+		JOB=(`grep -l "RUNTYP=HESSIAN" $GAMESSOUT/*`)
+	fi		
+	if ls -la|grep ^-|awk '{print $9}'|grep -qFx "$GAMESSOUT"; then
+		WORKTYPE=FILE
+		JOB=`grep -l "RUNTYP=HESSIAN" $GAMESSOUT`
+	fi
+else
+	echo -e "\033[01;31mThere's no valid GAMESS Output file selected. End of getThermo execution.\033[00m"  	
+	exit 1
+fi
+
+## Checking the Runtyp HESSIAN for GAMESS calculations
+if [ -z ${JOB[1]} ]; then
+	echo -e "\033[01;31mThe GAMESS jobs aren't from HESSIAN type. End of getThermo execution.\033[00m"  	
+	exit 1
+fi
+
+## Definition of Number of Vibrational Modes selected to thermodynamics proprieties calculations (NVibMode)
+if grep -q "NVibMode" $INPUT; then
+	NVibMode=`grep "NVibMode" $INPUT|tail -1|cut -d "=" -f 2|cut -d " " -f 1`
+else
+	echo -e "\033[01;31mThere's no valid number of vibrational modes selected. End of getThermo execution.\033[00m"  	
+	exit 1
+fi
+
+### Optional Keywords
+## Array containing the sequence of normal modes (IMode)
+if grep "IMode" $INPUT; then
+	IMode=(`grep "IMode" $INPUT|tail -1|cut -d "=" -f 2|cut -d "#" -f 1`)
+else
+    i=0
+	while [ $i -lt $NVibMode ]; do
+		IMode[$i]=$((i+6+1))
+		i=$((i+1))
+	done
+fi
+
+## Array containing selected temperatures in Kelvin (Temperature)
+if grep -q "Temperature" $INPUT; then
+	Temperature=(`grep "Temperature" $INPUT|tail -1|cut -d "=" -f 2|cut -d "#" -f 1`)
+else
+	Temperature=298.15
+fi
+
+### Individual GAMESS Output Informations
+NJob=0
+while [ $NJob -lt ${#JOB[*]} ]; do
+
+## Total Electronic Energy of System in Hartree units (EEnergy)
+if grep "EEnergy" $INPUT; then
+	EEnergy=`grep "EEnergy" $INPUT|tail -1|cut -d "=" -f 2|cut -d " " -f 1`
+else
+	EEnergy=`grep "TOTAL ENERGY =" ${JOB[$NJob]}|awk '{print $4}'`
+fi
+
+## Obtaning last informations from GAMESS Output
+NAtoms=`grep "TOTAL NUMBER OF ATOMS" ${JOB[$NJob]}|awk '{print $6}'`
+TMode=`echo "$NAtoms*3"|bc -l`
+QElec=`grep "ELEC\." ${JOB[$NJob]}|head -1|awk '{print $2}'`
+
+AWLine=`grep -n "ATOMIC WEIGHTS" ${JOB[$NJob]}|cut -d ':' -f 1|head -1`
+AMass=(`sed -n "$((AWLine+2)), $((AWLine+NAtoms+1)) p" ${JOB[$NJob]}|awk '{print $3}'`)
+
+InertiaLine=`grep -n "THE MOMENTS OF INERTIA ARE" ${JOB[$NJob]}|cut -d ':' -f 1|head -1`
+Inertia=(`sed -n "$((InertiaLine+1)) p" ${JOB[$NJob]}`)
+
+TModeList=(`grep "FREQUENCY:" ${JOB[$NJob]}|cut -d ':' -f 2`)
+
+### Creating the getThermo binary input file
+Title=`echo "${JOB[$NJob]}"|cut -d "." -f 1`
+echo -e "$NAtoms $TMode $NVibMode\n${IMode[*]}\n$EEnergy $QElec\n${AMass[*]}\n${Inertia[*]}\n${TModeList[*]}\n${#Temperature[*]}\n${Temperature[*]}" > $Title.getThermo.inp
+
+### Executing thermodynamics proprieties calculations with getThermo binary
+$getDIR/getThermo.x $Title $Title.getThermo.inp > $Title.getThermo.out
+
+echo "/nInformation" >> $Title.getThermo.out
+date '+Date %y-%m-%d - Time %H-%M-%S' >> $Title.getThermo.out
+rm -f $Title.getThermo.inp
+
+### Creating Table for Multiple Results
+if [ $WORKTYPE == FOLDER ]; then
+	if [ $NJob == 0 ]; then
+		echo -e "Job\tT (K)\tVibrational\tG (kJ/mol)\tRotational G (kJ/mol)\tTranslational G (kJ/mol)\tTotal G (kJ/mol)" > $GAMESSOUT.getThermo.tsv
+	fi
+    
+    NTemp=0
+    while [ $NTemp -lt ${#Temperature[*]} ]; do
+        GRot=`awk '/Rotational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+        GTrans=`awk '/Translational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+        GVib=`awk '/Vibrational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+        TGVib=`awk '/Total\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+        echo -e "$Title\t${Temperature[NTemp]}\t$GRot\t$GTrans\t$GVib\t$TGVib" >> $GAMESSOUT.getThermo.tsv
+        NTemp=$((NTemp+1))
+    done
+fi
+
+NJob=$((NJob+1))
+done
+
+echo -e "\033[01;32mgetThermo was sucesfully executed.\033[00m"
