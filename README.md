@@ -13,6 +13,8 @@ To use **getThermo**, you just need to run the script *getThermo* in the same fo
 
 Example: ``` bash $your-getThermo-dir/bin/getThermo $InputFile ```
 
+Read the documentation PDF file *User's Guide* to obtain more informations about it.
+
 ## About authors
 This application is developed by Grupo de Espectroscopia Teórica e Modelagem Molecular (GET) from Instituto de Química of Universidade Federal do Rio de Janeiro (IQ/UFRJ), coordinated by [professor Alexandre Rocha](mailto:rocha@iq.ufrj.br). 
 
