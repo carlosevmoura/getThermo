@@ -14,12 +14,12 @@
  Rotational Partition Function:       4.48602392E+03
  Translational Partition Function:    9.69174302E+06
 
- Vibrational Gibbs Free Energy:         106.40635540 kJ/mol
- Rotational Gibbs Free Energy:          -18.04829845 kJ/mol
- Translational Gibbs Free Energy:       -34.52832575 kJ/mol
+ Vibrational Gibbs Free Energy:          25.43172911 kcal/mol
+ Rotational Gibbs Free Energy:           -4.31364682 kcal/mol
+ Translational Gibbs Free Energy:        -8.25246785 kcal/mol
 
- Total Thermal Correction:               53.82973120 kJ/mol
- Total Gibbs Free Energy:            -1.31021893E+06 kJ/mol
+ Total Thermal Correction:               12.86561443 kcal/mol
+ Total Gibbs Free Energy:            -3.13149838E+05 kcal/mol
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  Temperature:                                 268.15 K
@@ -27,12 +27,12 @@
  Rotational Partition Function:       4.74919599E+03
  Translational Partition Function:    1.06577633E+07
 
- Vibrational Gibbs Free Energy:         106.39377334 kJ/mol
- Rotational Gibbs Free Energy:          -18.87454034 kJ/mol
- Translational Gibbs Free Energy:       -36.07769184 kJ/mol
+ Vibrational Gibbs Free Energy:          25.42872193 kcal/mol
+ Rotational Gibbs Free Energy:           -4.51112337 kcal/mol
+ Translational Gibbs Free Energy:        -8.62277523 kcal/mol
 
- Total Thermal Correction:               51.44154117 kJ/mol
- Total Gibbs Free Energy:            -1.31022132E+06 kJ/mol
+ Total Thermal Correction:               12.29482332 kcal/mol
+ Total Gibbs Free Energy:            -3.13150409E+05 kcal/mol
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  Temperature:                                 278.15 K
@@ -40,12 +40,12 @@
  Rotational Partition Function:       5.01732215E+03
  Translational Partition Function:    1.16793649E+07
 
- Vibrational Gibbs Free Energy:         106.37938351 kJ/mol
- Rotational Gibbs Free Energy:          -19.70543432 kJ/mol
- Translational Gibbs Free Energy:       -37.63481142 kJ/mol
+ Vibrational Gibbs Free Energy:          25.42528267 kcal/mol
+ Rotational Gibbs Free Energy:           -4.70971180 kcal/mol
+ Translational Gibbs Free Energy:        -8.99493574 kcal/mol
 
- Total Thermal Correction:               49.03913777 kJ/mol
- Total Gibbs Free Energy:            -1.31022372E+06 kJ/mol
+ Total Thermal Correction:               11.72063513 kcal/mol
+ Total Gibbs Free Energy:            -3.13150983E+05 kcal/mol
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  Temperature:                                 288.15 K
@@ -53,12 +53,12 @@
  Rotational Partition Function:       5.29031250E+03
  Translational Partition Function:    1.27575749E+07
 
- Vibrational Gibbs Free Energy:         106.36306059 kJ/mol
- Rotational Gibbs Free Energy:          -20.54081307 kJ/mol
- Translational Gibbs Free Energy:       -39.19940561 kJ/mol
+ Vibrational Gibbs Free Energy:          25.42138140 kcal/mol
+ Rotational Gibbs Free Energy:           -4.90937211 kcal/mol
+ Translational Gibbs Free Energy:        -9.36888272 kcal/mol
 
- Total Thermal Correction:               46.62284191 kJ/mol
- Total Gibbs Free Energy:            -1.31022614E+06 kJ/mol
+ Total Thermal Correction:               11.14312657 kcal/mol
+ Total Gibbs Free Energy:            -3.13151560E+05 kcal/mol
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  Temperature:                                 298.15 K
@@ -66,12 +66,12 @@
  Rotational Partition Function:       5.56808186E+03
  Translational Partition Function:    1.38934020E+07
 
- Vibrational Gibbs Free Energy:         106.34468148 kJ/mol
- Rotational Gibbs Free Energy:          -21.38052088 kJ/mol
- Translational Gibbs Free Energy:       -40.77121491 kJ/mol
+ Vibrational Gibbs Free Energy:          25.41698869 kcal/mol
+ Rotational Gibbs Free Energy:           -5.11006709 kcal/mol
+ Translational Gibbs Free Energy:        -9.74455416 kcal/mol
 
- Total Thermal Correction:               44.19294569 kJ/mol
- Total Gibbs Free Energy:            -1.31022857E+06 kJ/mol
+ Total Thermal Correction:               10.56236744 kcal/mol
+ Total Gibbs Free Energy:            -3.13152141E+05 kcal/mol
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
  Temperature:                                 308.15 K
@@ -79,12 +79,12 @@
  Rotational Partition Function:       5.85054937E+03
  Translational Partition Function:    1.50878375E+07
 
- Vibrational Gibbs Free Energy:         106.32412557 kJ/mol
- Rotational Gibbs Free Energy:          -22.22441251 kJ/mol
- Translational Gibbs Free Energy:       -42.34999722 kJ/mol
+ Vibrational Gibbs Free Energy:          25.41207571 kcal/mol
+ Rotational Gibbs Free Energy:           -5.31176203 kcal/mol
+ Translational Gibbs Free Energy:       -10.12189218 kcal/mol
 
- Total Thermal Correction:               41.74971585 kJ/mol
- Total Gibbs Free Energy:            -1.31023101E+06 kJ/mol
+ Total Thermal Correction:                9.97842149 kcal/mol
+ Total Gibbs Free Energy:            -3.13152725E+05 kcal/mol
 
  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-Date 15-11-14 - Time 13-42-06
+Date 15-11-15 - Time 03-28-36

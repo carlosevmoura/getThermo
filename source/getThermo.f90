@@ -149,6 +149,7 @@ PROGRAM getThermo
 	REAL(KIND=8), DIMENSION(3) :: Inertia
 	REAL(KIND=8), ALLOCATABLE, DIMENSION(:) :: TModeList, VibModeList, TempList, AMass
 	REAL(KIND=8) :: EEnergy, QElec, QTrans, QRot, QVib, ZPE, GEnergy, GEnergyCorr, TGEnergy, TMass
+	REAL(KIND=8), PARAMETER :: Calorie = 2.39005736E-4							! Energy Unit (kCal/J)
 	CHARACTER(100) :: Job, Input
 
 	CALL GETARG(1,Job)															! Get the external argument contents job name
@@ -192,12 +193,12 @@ PROGRAM getThermo
 		PRINT '(1X, "Rotational Partition Function:" T38, Es15.8)', QRot(Inertia, TempList(Num))
 		PRINT '(1X, "Translational Partition Function:" T38, Es15.8)', QTrans(AMass, NAtoms, TempList(Num))
 
-		PRINT '(/1X, "Vibrational Gibbs Free Energy: " T38, F15.8, 1X, "kJ/mol")', (GEnergy(QVib(VibModeList, NVibMode, TempList(Num)), TempList(Num))+ZPE(VibModeList, NVibMode))/1000.0
-		PRINT '(1X, "Rotational Gibbs Free Energy: " T38, F15.8, 1X, "kJ/mol")', (GEnergy(QRot(Inertia, TempList(Num)), TempList(Num)))/1000.0
-		PRINT '(1X, "Translational Gibbs Free Energy: " T38, F15.8, 1X, "kJ/mol")', (GEnergy(QTrans(AMass, NAtoms, TempList(Num)), TempList(Num)))/1000.0
+		PRINT '(/1X, "Vibrational Gibbs Free Energy: " T38, F15.8, 1X, "kcal/mol")', (GEnergy(QVib(VibModeList, NVibMode, TempList(Num)), TempList(Num))+ZPE(VibModeList, NVibMode))*Calorie
+		PRINT '(1X, "Rotational Gibbs Free Energy: " T38, F15.8, 1X, "kcal/mol")', (GEnergy(QRot(Inertia, TempList(Num)), TempList(Num)))*Calorie
+		PRINT '(1X, "Translational Gibbs Free Energy: " T38, F15.8, 1X, "kcal/mol")', (GEnergy(QTrans(AMass, NAtoms, TempList(Num)), TempList(Num)))*Calorie
 
-        PRINT '(/1X, "Total Thermal Correction:", T38, F15.8, 1X, "kJ/mol")', (GEnergyCorr(QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num)))/1000.0
-		PRINT '(1X, "Total Gibbs Free Energy:", T38, Es15.8, 1X, "kJ/mol")', (TGEnergy(EEnergy, QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num)))/1000.0
+        PRINT '(/1X, "Total Thermal Correction:", T38, F15.8, 1X, "kcal/mol")', (GEnergyCorr(QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num)))*Calorie
+		PRINT '(1X, "Total Gibbs Free Energy:", T38, Es15.8, 1X, "kcal/mol")', (TGEnergy(EEnergy, QElec, QTrans(AMass, NAtoms, TempList(Num)), QRot(Inertia, TempList(Num)), QVib(VibModeList, NVibMode, TempList(Num)), ZPE(VibModeList, NVibMode), TempList(Num)))*Calorie
 	END DO
 
 END PROGRAM getThermo

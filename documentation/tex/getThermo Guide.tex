@@ -189,7 +189,7 @@ The \textit{getThermo.x} binary perform the thermodynamic properties calculation
 
 To run \textbf{getThermo} you should use only the \textit{getThermo} shell-script, giving your input filename in a command like in the shown below. To avoid errors, this script \textbf{must} be executed in the folder which contain the input files.
 \begin{shaded}
-$getThermoDirectory/getThermo \{Input Filename\}
+\$getThermoDirectory/getThermo \{Input Filename\}
 \end{shaded}
 
 After the calculation are created two kinds of output files. The \textit{\{Work\}.getThermo.out} file contains the results for a single selected work. The \textit{\{Input Filename\}.getThermo.tsv} (\textit{Tab-Separated Values format}) contains all the results, organized in a table to simplify the post-treatment. 
@@ -217,7 +217,7 @@ KEYWORD=\{Keyword value \#1\},\{Keyword value \#2\},\{Keyword value \#3\}
 
 \subsection{Required Keywords}
 \begin{itemize}
-\item \textbf{OUTPUT}: GAMESS or Gaussian09 output filename or folder which contains. The output file must to be from Hessian calculation type (keyword \textit{RUNTYP=HESSIAN} in GAMESS input file or keyword \textit{Freq} in Gaussian09 input file).
+\item \textbf{Output}: GAMESS or Gaussian09 output filename or folder which contains. The output file must to be from Hessian calculation type (keyword \textit{RUNTYP=HESSIAN} in GAMESS input file or keyword \textit{Freq} in Gaussian09 input file).
 \item \textbf{NVibMode}: Number of vibrational modes selected to thermodynamic properties calculations.
 \end{itemize}
 

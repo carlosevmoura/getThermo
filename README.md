@@ -19,6 +19,6 @@ Read the documentation PDF file *User's Guide* to obtain more informations about
 This application is developed by Grupo de Espectroscopia Teórica e Modelagem Molecular (GET) from Instituto de Química of Universidade Federal do Rio de Janeiro (IQ/UFRJ), coordinated by [professor Alexandre Rocha](mailto:rocha@iq.ufrj.br). 
 
 The FORTRAN code and shell-scripts are developed by [Carlos Eduardo de Moura](mailto:carlosevmoura@iq.ufrj.br) and [Ricardo Oliveira](mailto:rrjunior@iq.ufrj.br).
-Fell encouraged to contact us with any question about getThermo!
+Fell encouraged to contact us with any question about **getThermo**!
 
 Distribution of **getThermo** is given on our [GitHub repository](https://github.com/carlosevmoura/getThermo), under [MIT License](https://opensource.org/licenses/MIT).

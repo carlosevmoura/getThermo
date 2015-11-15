@@ -29,8 +29,8 @@ fi
 
 ### Required Keywords
 ## Definition of output filename or folder which contains (OUTPUT)
-if grep -q "OUTPUT" $INPUT; then
-	OUTPUT=`grep "OUTPUT" $INPUT|tail -1|cut -d "=" -f 2|cut -d " " -f 1`
+if grep -q "Output" $INPUT; then
+	OUTPUT=`grep "Output" $INPUT|tail -1|cut -d "=" -f 2|cut -d " " -f 1`
 else
 	echo -e "\033[01;31mThere's no valid output file selected. End of getThermo execution.\033[00m"  	
 	exit 1
@@ -40,7 +40,7 @@ fi
 if ls -la|awk '{print $9}'|grep -q "$OUTPUT"; then	
 	if ls -la|grep ^d|awk '{print $9}'|grep -qFx "$OUTPUT"; then
 		WORKTYPE=FOLDER
-		JOB=(ls "$OUTPUT")
+		JOB=(`grep -l -e "RUNTYP=HESSIAN" -e "Frequencies" $OUTPUT/*`)
 	fi		
 	if ls -la|grep ^-|awk '{print $9}'|grep -qFx "$OUTPUT"; then
 		WORKTYPE=FILE
@@ -52,16 +52,16 @@ else
 fi
 
 ## Checking if the output file is from GAMESS or Gaussian09 calculation
-if grep -q "EXECUTION OF GAMESS TERMINATED NORMALLY" "${JOB[*]}"; then
-    if grep -q "RUNTYP=HESSIAN" "${JOB[*]}"; then
+if grep -q "EXECUTION OF GAMESS TERMINATED NORMALLY" "${JOB[0]}"; then
+    if grep -q "RUNTYP=HESSIAN" "${JOB[0]}"; then
         JOBTYPE=GAMESS
     else
     	echo -e "\033[01;31mThe GAMESS jobs aren't from HESSIAN type. End of getThermo execution.\033[00m"
         exit 1
     fi
 else
-    if grep -q "Normal termination of Gaussian 09" "${JOB[*]}"; then
-        if grep -q "Frequencies" "${JOB[*]}"; then
+    if grep -q "Normal termination of Gaussian 09" "${JOB[0]}"; then
+        if grep -q "Frequencies" "${JOB[0]}"; then
             JOBTYPE=GAUSSIAN
         fi
     else
@@ -150,6 +150,9 @@ GAUSSIAN)
 
     InertiaLine=`grep -n "moments of inertia" ${JOB[$NJob]}|cut -d ':' -f 1|head -1`
     Inertia=(`sed -n "$((InertiaLine+2)) p" ${JOB[$NJob]}|cut -d '-' -f 3`)
+    if [ ${#Inertia[*]} == 1 ]; then
+        Inertia=("${Inertia:0:10} ${Inertia:10:10} ${Inertia:20:10}")
+    fi
 
     TModeList=(`grep "Frequencies " ${JOB[$NJob]}|cut -d '-' -f 3`)
     ;;
@@ -169,7 +172,7 @@ rm -f $Title.getThermo.inp
 ### Creating Table for Multiple Results
 if [ $WORKTYPE == FOLDER ]; then
 	if [ $NJob == 0 ]; then
-		echo -e "Job\tT (K)\tVibrationalG (kJ/mol)\tRotationalG (kJ/mol)\tTranslationalG (kJ/mol)\tThermalCorrection (kJ/mol)\tTotalG (kJ/mol)" > $OUTPUT.getThermo.tsv
+		echo -e "Job\tT (K)\tVibrationalG (kcal/mol)\tRotationalG (kcal/mol)\tTranslationalG (kcal/mol)\tThermalCorrection (kcal/mol)\tTotalG (kcal/mol)" > $OUTPUT.getThermo.tsv
 	fi
     
     NTemp=0
