@@ -39,12 +39,10 @@ fi
 ## Checking work type as single calculation (File) or multiple calculations (Folder)
 if ls -la|awk '{print $9}'|grep -q "$OUTPUT"; then	
 	if ls -la|grep ^d|awk '{print $9}'|grep -qFx "$OUTPUT"; then
-		WORKTYPE=FOLDER
 		JOB=(`grep -l -e "RUNTYP=HESSIAN" -e "Frequencies" $OUTPUT/*`)
 	fi		
 	if ls -la|grep ^-|awk '{print $9}'|grep -qFx "$OUTPUT"; then
-		WORKTYPE=FILE
-		JOB="$OUTPUT"
+		JOB=`grep -l -e "RUNTYP=HESSIAN" -e "Frequencies" $OUTPUT`
 	fi
 else
 	echo -e "\033[01;31mThere's no valid output file selected. End of getThermo execution.\033[00m"  	
@@ -170,22 +168,20 @@ date '+Date %y-%m-%d - Time %H-%M-%S' >> $Title.getThermo.out
 rm -f $Title.getThermo.inp
 
 ### Creating Table for Multiple Results
-if [ $WORKTYPE == FOLDER ]; then
-	if [ $NJob == 0 ]; then
-		echo -e "Job\tT (K)\tVibrationalG (kcal/mol)\tRotationalG (kcal/mol)\tTranslationalG (kcal/mol)\tThermalCorrection (kcal/mol)\tTotalG (kcal/mol)" > $OUTPUT.getThermo.tsv
-	fi
-    
-    NTemp=0
-    while [ $NTemp -lt ${#Temperature[*]} ]; do
-        GRot=`awk '/Rotational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        GTrans=`awk '/Translational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        GVib=`awk '/Vibrational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        GCorr=`awk '/Total\ Thermal\ Correction\:/{print $4}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        TotalG=`awk '/Total\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
-        echo -e "$Title\t${Temperature[NTemp]}\t$GRot\t$GTrans\t$GVib\t$GCorr\t$TotalG" >> $OUTPUT.getThermo.tsv
-        NTemp=$((NTemp+1))
-    done
+if [ $NJob == 0 ]; then
+	echo -e "Job\tT (K)\tVibrationalG (kcal/mol)\tRotationalG (kcal/mol)\tTranslationalG (kcal/mol)\tThermalCorrection (kcal/mol)\tTotalG (kcal/mol)" > $OUTPUT.getThermo.tsv
 fi
+    
+NTemp=0
+while [ $NTemp -lt ${#Temperature[*]} ]; do
+    GRot=`awk '/Rotational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+    GTrans=`awk '/Translational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+    GVib=`awk '/Vibrational\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+    GCorr=`awk '/Total\ Thermal\ Correction\:/{print $4}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+    TotalG=`awk '/Total\ Gibbs\ Free\ Energy\:/{print $5}' $Title.getThermo.out|sed -n "$((NTemp+1)) p"`
+    echo -e "$Title\t${Temperature[NTemp]}\t$GRot\t$GTrans\t$GVib\t$GCorr\t$TotalG" >> $OUTPUT.getThermo.tsv
+    NTemp=$((NTemp+1))
+done
 
 NJob=$((NJob+1))
 done
