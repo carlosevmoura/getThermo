@@ -1,4 +1,4 @@
-Job	T (K)	VibrationalG (kJ/mol)	RotationalG (kJ/mol)	TranslationalG (kJ/mol)	ThermalCorrection (kJ/mol)	TotalG (kJ/mol)
+Job	T (K)	VibrationalG (kcal/mol)	RotationalG (kcal/mol)	TranslationalG (kcal/mol)	ThermalCorrection (kcal/mol)	TotalG (kcal/mol)
 molecules/chloromethane	258.15	-4.31364682	-8.25246785	25.43172911	12.86561443	-3.13149838E+05
 molecules/chloromethane	268.15	-4.51112337	-8.62277523	25.42872193	12.29482332	-3.13150409E+05
 molecules/chloromethane	278.15	-4.70971180	-8.99493574	25.42528267	11.72063513	-3.13150983E+05
