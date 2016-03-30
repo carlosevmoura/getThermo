@@ -139,7 +139,7 @@ GAMESS)
     InertiaLine=`grep -n "THE MOMENTS OF INERTIA ARE" ${JOB[$NJob]}|cut -d ':' -f 1|head -1`
     Inertia=(`sed -n "$((InertiaLine+1)) p" ${JOB[$NJob]}`)
 
-    TModeList=(`grep "FREQUENCY:" ${JOB[$NJob]}|cut -d ':' -f 2`)
+    TModeList=(`grep "FREQUENCY:" ${JOB[$NJob]}|cut -d ':' -f 2|sed 's/I/ /g'`)
     ;;
 GAUSSIAN)
     NAtoms=`grep "NAtoms" ${JOB[$NJob]}|tail -1|awk '{print $2}'`
